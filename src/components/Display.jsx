@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react";
 import Bus from "./Bus";
 
 class Display extends Component {
@@ -21,18 +21,21 @@ class Display extends Component {
         { id: 9, startTime: 280, endTime: 430 }
       ],
       busList: [
-        { id: "A", trip: [1] },
-        { id: "B", trip: [2] },
-        { id: "C", trip: [3] },
-        { id: "D", trip: [4] },
-        { id: "E", trip: [5] },
-        { id: "F", trip: [6] },
-        { id: "G", trip: [7] },
-        { id: "H", trip: [8] },
-        { id: "I", trip: [9] }
+        { id: 'A', trip: [1] },
+        { id: 'B', trip: [2] },
+        { id: 'C', trip: [3] },
+        { id: 'D', trip: [4] },
+        { id: 'E', trip: [5] },
+        { id: 'F', trip: [6] },
+        { id: 'G', trip: [7] },
+        { id: 'H', trip: [8] },
+        { id: 'I', trip: [9] }
       ]
     };
   }
+  //handClick function:
+  //To store 'selected trip' and the 'bus' the trip assigned to,
+  //in the state variable 'selected'
   handleClick(tripID) {
     let { selected, busList } = this.state;
     if (selected.id === tripID) return true;
@@ -40,30 +43,29 @@ class Display extends Component {
     selected.bus = busList.find(el => {
       for (let i = 0; i < el.trip.length; i++) {
         if (el.trip[i] === tripID) {
-          console.log("here is the real selected.bus", el);
           return el;
         }
       }
     });
-    //adding new bus with empty line
+    //Adding new bus with empty line
     busList.push({id: selected.bus.id.concat(tripID), trip:[]});
     this.setState({
       selected
     });
   }
-
+  //moveTrip function:
+  //to manage reschedule after the user selected the trip to be reassigned
   moveTrip(busID) {
     let { busList, tripList, selected } = this.state;
     if (selected.id === null) return;
+    //extract the bus info of the bus selected from this.state.busList
     let busSelected = busList.find(el => {
       if (el.id === busID) {
-        console.log("here is the busSelected", el);
         return el;
       }
     });
     let tripSelected = tripList.find(el => {
       if (el.id === selected.id) {
-        console.log("here is the tripSelected", el);
         return el;
       }
     });
@@ -76,18 +78,21 @@ class Display extends Component {
         }
       });
     }
-    //If no conflict, add the trip block to the bus, and remove the trip from the previous bus
+    //Check for trip conflict:
+    //if no conflict, add the trip block to the bus, and remove the trip from the previous bus
     if (checkConflict(timeRecord)) {
       busSelected.trip.push(selected.id);
       busList[busList.indexOf(selected.bus)].trip.splice(
         selected.bus.trip.indexOf(selected.id),
         1
       );
+      //Loop through busList to remove bus with no trips
       for(let b = 0; b < busList.length; b++){
           if(busList[b].trip.length === 0){
               busList.splice(b, 1);
           }
       }
+      //Reseting 'selected' variable in state
       selected.id = null;
       selected.bus = null;
       this.setState({
@@ -95,7 +100,7 @@ class Display extends Component {
         busList
       });
     }
-    //Function checkConflict:
+    //helper function checkConflict:
     //input datatype: array
     //output datatype: boolean
     // 1. sort the input array
