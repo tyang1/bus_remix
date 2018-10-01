@@ -2,27 +2,34 @@ import React, { Component } from "react";
 import Block from "./Block";
 
 const Bus = props => {
-  const { id, trip, tripList, handleClick, selected } = props;
+  const { id, trip, tripList, handleClick, selected, moveTrip } = props;
   const tripBlock = [];
   tripList.forEach(el => {
-    if (el.id === trip[0]) {
-      tripBlock.push(el);
+    for (let i = 0; i < trip.length; i++) {
+      if (el.id === trip[i]) {
+        tripBlock.push(el);
+      }
     }
   });
   const renderTrip = tripBlock.map(el => (
-    <div>
-      <Block
-        key={el.id}
-        el_id={el.id}
-        el_start={el.startTime}
-        el_end={el.endTime}
-        selected={selected}
-        handleClick={handleClick}
-      />
-    </div>
+    <Block
+      key={el.id}
+      el_id={el.id}
+      el_start={el.startTime}
+      el_end={el.endTime}
+      selected={selected}
+      handleClick={handleClick}
+    />
   ));
   return (
-    <div style={{ borderBottom: "solid 1px #D3D3D3" }} className={id}>
+    <div
+      style={{ display: "flex", borderBottom: "solid 1px #D3D3D3" }}
+      className={id}
+      onClick={event => {
+        console.log("here inside the onclick in Bus.jsx", event.target);
+        moveTrip(event.target.className);
+      }}
+    >
       {renderTrip}
     </div>
   );
