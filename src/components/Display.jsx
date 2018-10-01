@@ -1,4 +1,4 @@
-import React, { Component } from 'react";
+import React, { Component } from 'react';
 import Bus from "./Bus";
 
 class Display extends Component {
@@ -50,7 +50,8 @@ class Display extends Component {
     //Adding new bus with empty line
     busList.push({id: selected.bus.id.concat(tripID), trip:[]});
     this.setState({
-      selected
+      selected,
+      busList
     });
   }
   //moveTrip function:
@@ -86,10 +87,12 @@ class Display extends Component {
         selected.bus.trip.indexOf(selected.id),
         1
       );
+      console.log("here is after busList splice", busList)
       //Loop through busList to remove bus with no trips
       for(let b = 0; b < busList.length; b++){
           if(busList[b].trip.length === 0){
               busList.splice(b, 1);
+              b --;
           }
       }
       //Reseting 'selected' variable in state
