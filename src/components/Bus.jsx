@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Block from "./Block";
 
 const Bus = props => {
-  const { id, trip, tripList } = props;
+  const { id, trip, tripList, handleClick, selected } = props;
   const tripBlock = [];
   tripList.forEach(el => {
     if (el.id === trip[0]) {
@@ -16,6 +16,8 @@ const Bus = props => {
         el_id={el.id}
         el_start={el.startTime}
         el_end={el.endTime}
+        selected={selected}
+        handleClick={handleClick}
       />
     </div>
   ));

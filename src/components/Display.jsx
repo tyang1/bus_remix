@@ -4,8 +4,10 @@ import Bus from "./Bus";
 class Display extends Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       selected: { id: null, bus: null },
+
       tripList: [
         { id: 1, startTime: 30, endTime: 150 },
         { id: 2, startTime: 180, endTime: 300 },
@@ -32,14 +34,22 @@ class Display extends Component {
   }
   handleClick(busID) {
     let { selected } = this.state;
+    if(selected.id === busID) return true;
+    selected.id = busID;
+    this.setState({
+        selected
+    })
   }
   render() {
+    const handleClick = this.handleClick;
     const eachBus = this.state.busList.map(el => (
       <Bus
         key={el.id}
         id={el.id}
         trip={el.trip}
         tripList={this.state.tripList}
+        selected = {this.state.selected}
+        handleClick={handleClick}
       />
     ));
     return <div>{eachBus}</div>;
