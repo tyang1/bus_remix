@@ -45,6 +45,8 @@ class Display extends Component {
         }
       }
     });
+    //adding new bus with empty line
+    busList.push({id: selected.bus.id.concat(tripID), trip:[]});
     this.setState({
       selected
     });
@@ -81,6 +83,11 @@ class Display extends Component {
         selected.bus.trip.indexOf(selected.id),
         1
       );
+      for(let b = 0; b < busList.length; b++){
+          if(busList[b].trip.length === 0){
+              busList.splice(b, 1);
+          }
+      }
       selected.id = null;
       selected.bus = null;
       this.setState({

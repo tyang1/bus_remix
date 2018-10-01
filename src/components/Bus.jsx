@@ -23,7 +23,7 @@ const Bus = props => {
   ));
   return (
     <div
-      style={{ display: "flex", borderBottom: "solid 1px #D3D3D3" }}
+      style={{ display: "flex", height: 50, borderBottom: "solid 1px #D3D3D3" }}
       className={id}
       onClick={event => {
         console.log("here inside the onclick in Bus.jsx", event.target);
